@@ -18,7 +18,7 @@ let accessToken;
 const getAccessToken = async()=>{
     try{
         // if(tokenExperationTime < currentTime)
-        if(accessToken)return;
+        if(accessToken && !isTokenExpired())return;
 
         const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
 
@@ -31,12 +31,16 @@ const getAccessToken = async()=>{
     }
 }
 
+const isTokenExpired = ()=>{
+    const currentTime = new Date().getTime();
+    return currentTime < tokenExperationTime;
+}
+
 
 module.exports = {
     newGames: async (req, res)=>{
         try{
         await getAccessToken();
-            console.log()
         const response = await axios.post(
             'https://api.igdb.com/v4/games',
             {
