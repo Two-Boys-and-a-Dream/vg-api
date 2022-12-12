@@ -18,19 +18,19 @@ const getAccessToken = async () => {
   tokenExperationTime = response.data.expires_in + currentTime;
 };
 
-const reusableAxiosPost = async (routeName) => {
+const Post = async (routeName) => {
   await getAccessToken();
 
-  const config = newReleasesPostConfig();
-  const data = postData[routeName]();
-  return await axios.post("https://api.igdb.com/v4/games", data, config);
+  const data = formatData(routeName);
+  const config = postConfig();
+  return axios.post("https://api.igdb.com/v4/games", data, config);
 };
 
-module.exports = reusableAxiosPost;
+module.exports = Post;
 
 //AXIOS CONFIG
 //axios posts default config
-const newReleasesPostConfig = () => {
+const postConfig = () => {
   return {
     headers: {
       Accept: "application/json",
@@ -42,25 +42,22 @@ const newReleasesPostConfig = () => {
 };
 
 //AXIOS DATA OBJECTS
-const postData = {
-  new: () => {
-    const currentTime = new Date().getTime();
-    const startingTime = currentTime - 604800; //current time - a week in unix
+function formatData(dataType) {
+  const currentTime = new Date().getTime();
+  const startingTime = currentTime - 604800; //current time - a week in unix
 
-    //not working as intended, the where section isnt working; returns games from 2000 and under
-    return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`;
-  },
-  upcoming: () => {
-    const currentTime = new Date().getTime();
-    return `fields platforms.*, release_dates.human, name; where release_dates.date > ${currentTime};`;
-  },
-  popular: () => {
-    const currentTime = new Date().getTime();
-    const startingTime = currentTime - 604800; //current time - a week in unix
-
-    return `fields platforms.*, release_dates.human, name, total_rating_count; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`;
-  },
-};
+  switch (dataType) {
+    case "new":
+      `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`;
+      return;
+    case "upcoming":
+      return `fields platforms.*, release_dates.human, name; where release_dates.date > ${currentTime};`;
+    case "popular":
+      return `fields platforms.*, release_dates.human, name, total_rating_count; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`;
+    default:
+      return;
+  }
+}
 
 //unix time tables
 //1hour 3600sec

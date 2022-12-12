@@ -1,9 +1,9 @@
-const reusableAxiosPost = require("../igdbHelper");
+const Post = require("../igdbHelper");
 
 module.exports = {
   newGames: async (req, res) => {
     try {
-      const { data } = await reusableAxiosPost("new");
+      const { data } = await Post("new");
       res.status(200);
       res.json(data);
     } catch (e) {
@@ -14,7 +14,7 @@ module.exports = {
   },
   upcomingGames: async (req, res) => {
     try {
-      const { data } = await reusableAxiosPost("upcoming");
+      const { data } = await Post("upcoming");
       res.status(200);
       res.send(data);
     } catch (e) {
@@ -25,7 +25,7 @@ module.exports = {
   },
   popularGames: async (req, res) => {
     try {
-      const { data } = await reusableAxiosPost("popular");
+      const { data } = await Post("popular");
       res.status(200);
       res.send(data);
     } catch (e) {
