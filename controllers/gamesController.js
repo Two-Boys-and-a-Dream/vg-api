@@ -1,27 +1,35 @@
 const axios = require("axios");
 require('dotenv').config();
 
+let tokenExperationTime;
+let accessToken;
+
 const getAccessToken = async()=>{
     try{
         const {CLIENT_ID, CLIENT_SECRET} = process.env;
         const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
+
         const response = await axios.post(url);
-        return response.data.access_token;
+        accessToken = response.data.access_token;
+        tokenExperationTime = response.data.expires_in;
+
     }catch (e) {
         console.log(e);
     }
 }
 
+
 module.exports = {
     newGames: async (req, res)=>{
-        const token = await getAccessToken();
+        if(!accessToken) await getAccessToken();
+
 
         res.end();
     },
-    upcomingGames: (req, res)=>{
-
+    upcomingGames: async(req, res)=>{
+        if(!accessToken) await getAccessToken();
     },
-    popularGames: (req, res)=>{
-
+    popularGames: async(req, res)=>{
+        if(!accessToken) await getAccessToken();
     }
 }
