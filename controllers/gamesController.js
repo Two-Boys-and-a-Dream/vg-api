@@ -4,7 +4,6 @@ module.exports = {
   newGames: async (req, res) => {
     try {
       const { data } = await reusableAxiosPost();
-      console.log(data);
       res.status(200);
       res.json(data);
     } catch (e) {

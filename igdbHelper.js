@@ -23,13 +23,11 @@ const getAccessToken = async () => {
 const reusableAxiosPost = async () => {
   await getAccessToken();
 
-  const response = await axios.post(
+  return await axios.post(
     "https://api.igdb.com/v4/games",
     newReleasesPostData(),
     newReleasesPostConfig()
   );
-  console.log(response);
-  return response;
 };
 
 module.exports = reusableAxiosPost;
@@ -48,12 +46,11 @@ const newReleasesPostConfig = () => {
 
 //axios data object for new releases post request
 const newReleasesPostData = () => {
-  console.log("new release post data func");
   const currentTime = new Date().getTime();
   const startingTime = currentTime - 604800; //current time - a week in unix
 
-  return `fields release_dates.platform.*, release_dates.human, name;
-    where release_dates.date > ${startingTime} & release_dates.date<=${currentTime};`;
+  //not working as intended for some reason, the where section isnt working
+  return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`;
 };
 
 //unix time tables
