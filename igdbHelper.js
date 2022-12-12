@@ -48,8 +48,7 @@ function formatData(dataType) {
 
     switch (dataType) {
         case 'new':
-            ;`fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`
-            return
+            return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`
         case 'upcoming':
             return `fields platforms.*, release_dates.human, name; where release_dates.date > ${currentTime};`
         case 'popular':
