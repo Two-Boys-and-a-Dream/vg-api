@@ -1,0 +1,23 @@
+{
+    "env": {
+        "node": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "plugins": ["jest"],
+    "extends": ["eslint:recommended", "prettier"],
+    "overrides": [
+        {
+            "files": ["**/*.test.js"],
+            "env": { "jest/globals": true },
+            "plugins": ["jest"],
+            "extends": ["plugin:jest/recommended"]
+        }
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    }
+}
