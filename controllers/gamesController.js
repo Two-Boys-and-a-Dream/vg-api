@@ -33,28 +33,6 @@ module.exports = {
       const currentTime = new Date().getTime();
       const startingTime = currentTime - 604800;
 
-      // const response = await axios({
-      //     url: "https://api.igdb.com/v4/games",
-      //     method: 'POST',
-      //     headers:{
-      //         'Accept': 'application/json',
-      //         'Client-ID': CLIENT_ID,
-      //         'Authorization': `Bearer ${accessToken}`,
-      //         'Content-Type': 'text/plain'
-      //     },
-      //     data: `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date<=${currentTime};`
-      // });
-      console.log({ accessToken });
-      //   const response = await axios.post("https://api.igdb.com/v4/games", {
-      //     headers: {
-      //       accept: "application/json",
-      //       "client-id": CLIENT_ID,
-      //       authorization: `Bearer ${accessToken}`,
-      //       //   "Content-Type": "text/plain",
-      //     },
-      //     // data: `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date<=${currentTime};`,
-      //   });
-
       const data = {
         data: `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date<=${currentTime};`,
       };
@@ -71,8 +49,6 @@ module.exports = {
         data,
         config
       );
-
-      console.log(response);
 
       // res.json(response.data);
       res.send("wow");
