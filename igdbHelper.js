@@ -62,30 +62,6 @@ const postData = {
   },
 };
 
-// //AXIOS DATA
-// //axios data object for new games post request
-// const newReleasesPostData = () => {
-//   const currentTime = new Date().getTime();
-//   const startingTime = currentTime - 604800; //current time - a week in unix
-
-//   //not working as intended, the where section isnt working; returns games from 2000 and under
-//   return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`;
-// };
-
-// //axios data object for upcoming games post request
-// const upcomingReleasesPostData = () => {
-//   const currentTime = new Date().getTime();
-//   return `fields platform.*, release_dates.human, name; where release_dates.date > ${currentTime};`;
-// };
-
-// const popularReleasesPostData = () => {
-//   const currentTime = new Date().getTime();
-//   const startingTime = currentTime - 604800; //current time - a week in unix
-
-//   return `fields platform.*, release_dates.human, name, total_rating.*;
-//     where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`;
-// };
-
 //unix time tables
 //1hour 3600sec
 //1day 86400
