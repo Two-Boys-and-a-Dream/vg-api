@@ -9,6 +9,8 @@ on:
 env:
   CLIENT_ID: ${{ secrets.CLIENT_ID }}
   CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # Needed to get PR information, if any
 
 jobs:
   Test_And_Audit:
@@ -31,3 +33,6 @@ jobs:
 
       - name: Test
         run: npm run test
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
