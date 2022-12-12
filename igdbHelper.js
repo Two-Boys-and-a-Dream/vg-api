@@ -9,29 +9,26 @@ let accessToken;
 //sets token and timer, if token doesn't exist and/or is expired.
 const getAccessToken = async () => {
   const currentTime = new Date().getTime();
-
   if (accessToken && currentTime < tokenExperationTime) return;
 
   const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`;
-
   const response = await axios.post(url);
 
   accessToken = response.data.access_token;
   tokenExperationTime = response.data.expires_in + currentTime;
 };
 
-const reusableAxiosPost = async () => {
+const reusableAxiosPost = async (routeName) => {
   await getAccessToken();
 
-  return await axios.post(
-    "https://api.igdb.com/v4/games",
-    newReleasesPostData(),
-    newReleasesPostConfig()
-  );
+  const config = newReleasesPostConfig();
+  const data = postData[routeName]();
+  return await axios.post("https://api.igdb.com/v4/games", data, config);
 };
 
 module.exports = reusableAxiosPost;
 
+//AXIOS CONFIG
 //axios posts default config
 const newReleasesPostConfig = () => {
   return {
@@ -44,14 +41,50 @@ const newReleasesPostConfig = () => {
   };
 };
 
-//axios data object for new releases post request
-const newReleasesPostData = () => {
-  const currentTime = new Date().getTime();
-  const startingTime = currentTime - 604800; //current time - a week in unix
+//AXIOS DATA OBJECTS
+const postData = {
+  new: () => {
+    const currentTime = new Date().getTime();
+    const startingTime = currentTime - 604800; //current time - a week in unix
 
-  //not working as intended for some reason, the where section isnt working
-  return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`;
+    //not working as intended, the where section isnt working; returns games from 2000 and under
+    return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`;
+  },
+  upcoming: () => {
+    const currentTime = new Date().getTime();
+    return `fields platforms.*, release_dates.human, name; where release_dates.date > ${currentTime};`;
+  },
+  popular: () => {
+    const currentTime = new Date().getTime();
+    const startingTime = currentTime - 604800; //current time - a week in unix
+
+    return `fields platforms.*, release_dates.human, name, total_rating_count; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`;
+  },
 };
+
+// //AXIOS DATA
+// //axios data object for new games post request
+// const newReleasesPostData = () => {
+//   const currentTime = new Date().getTime();
+//   const startingTime = currentTime - 604800; //current time - a week in unix
+
+//   //not working as intended, the where section isnt working; returns games from 2000 and under
+//   return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`;
+// };
+
+// //axios data object for upcoming games post request
+// const upcomingReleasesPostData = () => {
+//   const currentTime = new Date().getTime();
+//   return `fields platform.*, release_dates.human, name; where release_dates.date > ${currentTime};`;
+// };
+
+// const popularReleasesPostData = () => {
+//   const currentTime = new Date().getTime();
+//   const startingTime = currentTime - 604800; //current time - a week in unix
+
+//   return `fields platform.*, release_dates.human, name, total_rating.*;
+//     where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`;
+// };
 
 //unix time tables
 //1hour 3600sec
