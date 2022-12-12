@@ -8,7 +8,6 @@ require('dotenv').config();
 //1month 2629743
 //1year 31556926
 
-//TODO: check if token is expired, if so update it
 
 const {CLIENT_ID, CLIENT_SECRET} = process.env;
 
@@ -16,45 +15,54 @@ let tokenExperationTime;
 let accessToken;
 
 const getAccessToken = async()=>{
-    try{
-        // if(tokenExperationTime < currentTime)
-        if(accessToken && !isTokenExpired())return;
+        const currentTime = new Date().getTime();
+
+        if(accessToken && currentTime < tokenExperationTime)return;
 
         const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
 
         const response = await axios.post(url);
         accessToken = response.data.access_token;
-        tokenExperationTime = response.data.expires_in;
-
-    }catch (e) {
-        console.log(e);
+        tokenExperationTime = response.data.expires_in + currentTime;
     }
-}
-
-const isTokenExpired = ()=>{
-    const currentTime = new Date().getTime();
-    return currentTime < tokenExperationTime;
-}
-
 
 module.exports = {
     newGames: async (req, res)=>{
         try{
         await getAccessToken();
-        const response = await axios.post(
-            'https://api.igdb.com/v4/games',
-            {
-                headers:{
-                    'Client-ID': CLIENT_ID,
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'text/plain',
-                },
-            data:'fields release_dates.platform.*, release_dates.human, name; where release_dates.date > 1670020433 & release_dates.date<=1670620433;'
-            },
-        );
-        res.json(response.data);
+
+        // const currentTime = new Date().getTime();
+        // const startingTime = currentTime - 604800;
+
+            // const response = await axios({
+            //     url: "https://api.igdb.com/v4/games",
+            //     method: 'POST',
+            //     headers:{
+            //         'Accept': 'application/json',
+            //         'Client-ID': CLIENT_ID,
+            //         'Authorization': `Bearer ${accessToken}`,
+            //         'Content-Type': 'text/plain'
+            //     },
+            //     data: `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date<=${currentTime};`
+            // });
+
+        // const response = await axios.post(
+        //     'https://api.igdb.com/v4/games',
+        //     {
+        //         headers:{
+        //             'Accept': 'application/json',
+        //             'Client-ID': CLIENT_ID,
+        //             'Authorization': `Bearer ${accessToken}`,
+        //             'Content-Type': 'text/plain',
+        //         },
+        //     data:`fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date<=${currentTime};`
+        //     },
+        // );
+        // res.json(response.data);
         }catch (e) {
             console.log(e);
+            res.status(400);
+            res.end();
         }
 
     },
