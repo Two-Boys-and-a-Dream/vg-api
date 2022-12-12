@@ -1,6 +1,6 @@
 name: Merge-to-Main
 on:
-  merge:
+  push:
     branches:
       - main
   # allows you to manually trigger this in GH actions
