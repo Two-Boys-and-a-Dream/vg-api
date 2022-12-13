@@ -1,4 +1,4 @@
-const Post = require('../igdbHelper')
+const { Post } = require('../utils/igdbHelper')
 
 module.exports = {
     newGames: async (req, res) => {
@@ -16,7 +16,7 @@ module.exports = {
         try {
             const { data } = await Post('upcoming')
             res.status(200)
-            res.send(data)
+            res.json(data)
         } catch (e) {
             console.log(e)
             res.status(400)
@@ -27,7 +27,7 @@ module.exports = {
         try {
             const { data } = await Post('popular')
             res.status(200)
-            res.send(data)
+            res.json(data)
         } catch (e) {
             console.log(e)
             res.status(400)

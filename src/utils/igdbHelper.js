@@ -7,11 +7,12 @@ let tokenExperationTime
 let accessToken
 
 //sets token and timer, if token doesn't exist and/or is expired.
-const getAccessToken = async () => {
+const getAccessToken = async (token, expiration) => {
     const currentTime = new Date().getTime()
-    if (accessToken && currentTime < tokenExperationTime) return
+    if (token && currentTime < expiration) return
 
     const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
+
     const response = await axios.post(url)
 
     accessToken = response.data.access_token
@@ -19,14 +20,12 @@ const getAccessToken = async () => {
 }
 
 const Post = async (routeName) => {
-    await getAccessToken()
+    await getAccessToken(accessToken, tokenExperationTime)
 
     const data = formatData(routeName)
     const config = postConfig()
     return axios.post('https://api.igdb.com/v4/games', data, config)
 }
-
-module.exports = Post
 
 //AXIOS CONFIG
 //axios posts default config
@@ -57,6 +56,8 @@ function formatData(dataType) {
             return
     }
 }
+
+module.exports = { getAccessToken, Post, postConfig, formatData }
 
 //unix time tables
 //1hour 3600sec

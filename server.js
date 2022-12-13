@@ -1,6 +1,6 @@
 const express = require('express')
 const app = require('express')()
-const gamesRouter = require('./routes/gamesRoute')
+const gamesRouter = require('./src/routes/gamesRoute')
 const PORT = 3001
 
 app.use(express.urlencoded({ extended: true }))
