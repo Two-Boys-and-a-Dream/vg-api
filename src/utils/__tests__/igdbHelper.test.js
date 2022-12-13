@@ -1,9 +1,4 @@
-const {
-    getAccessToken,
-    Post,
-    postConfig,
-    formatData,
-} = require('../igdbHelper')
+const { getAccessToken, Post, formatData } = require('../igdbHelper')
 const axios = require('axios')
 
 jest.mock('axios')
