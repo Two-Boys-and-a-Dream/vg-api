@@ -24,6 +24,7 @@ const Post = async (routeName) => {
 
     const data = formatData(routeName)
     const config = postConfig()
+    console.log(data)
     return axios.post('https://api.igdb.com/v4/games', data, config)
 }
 
@@ -42,16 +43,19 @@ const postConfig = () => {
 
 //AXIOS DATA OBJECTS
 function formatData(dataType) {
-    const currentTime = new Date().getTime()
+    const currentTime = Math.floor(new Date().getTime() * 0.001)
     const startingTime = currentTime - 604800 //current time - a week in unix
 
     switch (dataType) {
         case 'new':
-            return `fields release_dates.platform.*, release_dates.human, name; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime};`
+            return `fields platforms.*, release_dates.date, release_dates.human, name;
+            where release_dates.date >= ${startingTime} & release_dates.date <= ${currentTime};`
         case 'upcoming':
-            return `fields platforms.*, release_dates.human, name; where release_dates.date > ${currentTime};`
+            return `fields platforms.*, release_dates.date, release_dates.human, name;
+            where release_dates.date > ${currentTime};`
         case 'popular':
-            return `fields platforms.*, release_dates.human, name, total_rating_count; where release_dates.date > ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`
+            return `fields platforms.*, release_dates.date, release_dates.human, name, total_rating_count;
+            where release_dates.date >= ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`
         default:
             return
     }
