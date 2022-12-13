@@ -24,7 +24,6 @@ const Post = async (routeName) => {
 
     const data = formatData(routeName)
     const config = postConfig()
-    console.log(data)
     return axios.post('https://api.igdb.com/v4/games', data, config)
 }
 
