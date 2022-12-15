@@ -33,6 +33,17 @@ npm run start
 
 Your server should be running at `http://localhost:3001/`
 
+## Insomnia/Postman
+
+There is a file called `Insomnia.json` in the root folder. Import into the API client of your choosing. 3 Environments are setup: localhost, development, and prod.
+
+## Deployments
+
+This project is deployed to [railway](https://railway.app). Use the following URLs to access the API:
+
+-   [Development](https://vg-api-development.up.railway.app/)
+-   [Production](https://vg-api-production.up.railway.app/)
+
 ### Jetbrains prettier setup
 
 To add prettier to your webstorm IDE, Reference the docs at [prettier](https://prettier.io/docs/en/webstorm.html).
