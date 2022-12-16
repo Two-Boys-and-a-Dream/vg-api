@@ -1,0 +1,28 @@
+name: Deploy-to-Prod
+on:
+    # allows you to manually trigger this in GH actions
+    workflow_dispatch:
+
+jobs:
+    Railway_Deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Node 16.x
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16.x
+
+            - name: Install Packages
+              run: npm install
+
+            - name: Install Railway
+              run: npm i -g @railway/cli
+
+            - name: Deploy
+              run: railway up
+              env:
+                  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
