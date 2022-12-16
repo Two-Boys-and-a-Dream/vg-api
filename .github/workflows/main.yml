@@ -36,3 +36,11 @@ jobs:
 
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
+
+            - name: Install Railway
+              run: npm i -g @railway/cli
+
+            - name: Deploy
+              run: railway up
+              env:
+                  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_DEV }}
