@@ -25,6 +25,7 @@
     "homepage": "https://github.com/Two-Boys-and-a-Dream/vg-api#readme",
     "dependencies": {
         "axios": "0.27.2",
+        "cors": "^2.8.5",
         "dotenv": "^16.0.3",
         "express": "^4.18.2"
     },
