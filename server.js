@@ -1,10 +1,13 @@
+require('dotenv').config()
 const express = require('express')
 const app = require('express')()
 const gamesRouter = require('./src/routes/gamesRoute')
-const PORT = 3001
+const cors = require('cors')
+const { PORT } = process.env
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send('Hello World!')

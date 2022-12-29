@@ -1,4 +1,3 @@
-require('dotenv').config()
 const axios = require('axios')
 
 const { CLIENT_ID, CLIENT_SECRET } = process.env
