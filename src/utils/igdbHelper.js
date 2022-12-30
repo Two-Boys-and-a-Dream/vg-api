@@ -1,34 +1,19 @@
 const axios = require('axios')
-
+const { FIELDS, WHERE } = require('./queries')
 const { CLIENT_ID, CLIENT_SECRET } = process.env
 
+/**
+ * Temporary token storage.
+ * Need a more formal approach ASAP.
+ */
 let tokenExperationTime
 let accessToken
 
-//sets token and timer, if token doesn't exist and/or is expired.
-const getAccessToken = async (token, expiration) => {
-    const currentTime = new Date().getTime()
-    if (token && currentTime < expiration) return
-
-    const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
-
-    const response = await axios.post(url)
-
-    accessToken = response.data.access_token
-    tokenExperationTime = response.data.expires_in + currentTime
-}
-
-const Post = async (routeName) => {
-    await getAccessToken(accessToken, tokenExperationTime)
-
-    const data = formatData(routeName)
-    const config = postConfig()
-    return axios.post('https://api.igdb.com/v4/games', data, config)
-}
-
-//AXIOS CONFIG
-//axios posts default config
-const postConfig = () => {
+/**
+ * Default axios configuration to authenticate with IGDB
+ * @returns {Object}
+ */
+function postConfig() {
     return {
         headers: {
             Accept: 'application/json',
@@ -39,31 +24,61 @@ const postConfig = () => {
     }
 }
 
-//AXIOS DATA OBJECTS
-function formatData(dataType) {
-    const currentTime = Math.floor(new Date().getTime() * 0.001)
-    const startingTime = currentTime - 604800 //current time - a week in unix
+/**
+ * Validates the current access_token isn't expired.
+ * If so, retrieves and stores a new one.
+ * @param {String} token access_token
+ * @param {Number} expiration time that token expires
+ */
+const getAccessToken = async (token, expiration) => {
+    // check if current token is expired
+    // if not, bail out early
+    const currentTime = new Date().getTime()
+    if (token && currentTime < expiration) return
 
+    // retrieve new token
+    const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
+    const response = await axios.post(url)
+    const { access_token, expires_in } = response.data
+
+    // store it
+    accessToken = access_token
+    tokenExperationTime = expires_in + currentTime
+}
+
+/**
+ * Calls IGDB to retrieve data with pre-configured options.
+ * @param {String} routeName name of IGDB endpoint you want to hit
+ * @returns {Promise<Object>} raw axios response
+ */
+const Post = async (routeName) => {
+    await getAccessToken(accessToken, tokenExperationTime)
+    // status 401 (NUMBER)
+    const body = formatBody(routeName)
+    return axios.post('https://api.igdb.com/v4/games', body, postConfig())
+}
+
+/**
+ * Formats and returns a text string for querying data to IDGB
+ * @param {String} dataType
+ * @returns {String} raw text body string
+ */
+function formatBody(dataType) {
     switch (dataType) {
         case 'new':
-            return `fields platforms.*, release_dates.date, release_dates.human, name;
-            where release_dates.date >= ${startingTime} & release_dates.date <= ${currentTime};`
+            return `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                where ${WHERE.released_last_7_days()} & ${WHERE.remove_exotic};`
         case 'upcoming':
-            return `fields platforms.*, release_dates.date, release_dates.human, name;
-            where release_dates.date > ${currentTime};`
+            return `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                where ${WHERE.unreleased()} & ${WHERE.remove_exotic};`
         case 'popular':
-            return `fields platforms.*, release_dates.date, release_dates.human, name, total_rating_count;
-            where release_dates.date >= ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`
+            return `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                where ${WHERE.released_last_30_days()} & ${
+                WHERE.more_than_20_ratings
+            } & ${WHERE.remove_exotic};`
         default:
             return
     }
 }
 
-module.exports = { getAccessToken, Post, postConfig, formatData }
-
-//unix time tables
-//1hour 3600sec
-//1day 86400
-//1week 604800
-//1month 2629743
-//1year 31556926
+module.exports = { getAccessToken, Post, formatBody }

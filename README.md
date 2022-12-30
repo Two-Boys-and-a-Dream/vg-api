@@ -23,6 +23,8 @@ Clone the repo to your machine. Then run:
 npm i
 ```
 
+Reach out and request the `.env` file. To use your own credentials, follow the setup at [IGDB](https://api-docs.igdb.com/#about).
+
 ## Running the project
 
 Start the server with

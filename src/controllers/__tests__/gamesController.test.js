@@ -29,7 +29,7 @@ describe('gamesController', () => {
             await newGames({}, res)
 
             expect(res.status).toHaveBeenCalledWith(400)
-            expect(res.send).toHaveBeenCalledWith('happened in new games route')
+            expect(res.send).toHaveBeenCalledWith({})
         })
     })
 
@@ -46,9 +46,7 @@ describe('gamesController', () => {
             await upcomingGames({}, res)
 
             expect(res.status).toHaveBeenCalledWith(400)
-            expect(res.send).toHaveBeenCalledWith(
-                'happened in upcoming games route'
-            )
+            expect(res.send).toHaveBeenCalledWith({})
         })
     })
 
@@ -65,9 +63,7 @@ describe('gamesController', () => {
             await popularGames({}, res)
 
             expect(res.status).toHaveBeenCalledWith(400)
-            expect(res.send).toHaveBeenCalledWith(
-                'happened in popular games route'
-            )
+            expect(res.send).toHaveBeenCalledWith({})
         })
     })
 })

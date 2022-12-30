@@ -1,4 +1,4 @@
-const { getAccessToken, Post, formatData } = require('../igdbHelper')
+const { getAccessToken, Post, formatBody } = require('../igdbHelper')
 const axios = require('axios')
 
 jest.mock('axios')
@@ -39,19 +39,19 @@ describe('igdbHelper', () => {
         })
     })
 
-    describe('formatData', () => {
+    describe('formatBody', () => {
         it('handles new case', () => {
-            const data = formatData('new')
+            const data = formatBody('new')
             expect(typeof data).toEqual('string')
         })
 
         it('handles upcoming case', () => {
-            const data = formatData('upcoming')
+            const data = formatBody('upcoming')
             expect(typeof data).toEqual('string')
         })
 
         it('handles popular case', () => {
-            const data = formatData('popular')
+            const data = formatBody('popular')
             expect(typeof data).toEqual('string')
         })
     })

@@ -9,7 +9,7 @@ module.exports = {
         } catch (e) {
             console.log(e)
             res.status(400)
-            res.send('happened in new games route')
+            res.send(e)
         }
     },
     upcomingGames: async (req, res) => {
@@ -20,7 +20,7 @@ module.exports = {
         } catch (e) {
             console.log(e)
             res.status(400)
-            res.send('happened in upcoming games route')
+            res.send(e)
         }
     },
     popularGames: async (req, res) => {
@@ -31,7 +31,7 @@ module.exports = {
         } catch (e) {
             console.log(e)
             res.status(400)
-            res.send('happened in popular games route')
+            res.send(e)
         }
     },
 }
