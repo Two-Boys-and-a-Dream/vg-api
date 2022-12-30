@@ -1,5 +1,4 @@
 const axios = require('axios')
-
 const { CLIENT_ID, CLIENT_SECRET } = process.env
 
 /**
@@ -11,14 +10,17 @@ let accessToken
 
 /**
  * Default axios configuration to authenticate with IGDB
+ * @returns {Object}
  */
-const postConfig = {
-    headers: {
-        Accept: 'application/json',
-        'Client-ID': `${CLIENT_ID}`,
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'text/plain',
-    },
+function postConfig() {
+    return {
+        headers: {
+            Accept: 'application/json',
+            'Client-ID': `${CLIENT_ID}`,
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'text/plain',
+        },
+    }
 }
 
 /**
@@ -37,7 +39,7 @@ const getAccessToken = async (token, expiration) => {
     const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
     const response = await axios.post(url)
     const { access_token, expires_in } = response.data
-
+    console.log({ access_token, expires_in })
     // store it
     accessToken = access_token
     tokenExperationTime = expires_in + currentTime
@@ -50,9 +52,9 @@ const getAccessToken = async (token, expiration) => {
  */
 const Post = async (routeName) => {
     await getAccessToken(accessToken, tokenExperationTime)
-
+    // status 401 (NUMBER)
     const data = formatData(routeName)
-    return axios.post('https://api.igdb.com/v4/games', data, postConfig)
+    return axios.post('https://api.igdb.com/v4/games', data, postConfig())
 }
 
 /**
