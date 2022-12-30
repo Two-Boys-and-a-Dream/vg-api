@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { FIELDS, WHERE } = require('./queries')
 const { CLIENT_ID, CLIENT_SECRET } = process.env
 
 /**
@@ -39,7 +40,7 @@ const getAccessToken = async (token, expiration) => {
     const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
     const response = await axios.post(url)
     const { access_token, expires_in } = response.data
-    console.log({ access_token, expires_in })
+
     // store it
     accessToken = access_token
     tokenExperationTime = expires_in + currentTime
@@ -53,8 +54,8 @@ const getAccessToken = async (token, expiration) => {
 const Post = async (routeName) => {
     await getAccessToken(accessToken, tokenExperationTime)
     // status 401 (NUMBER)
-    const data = formatData(routeName)
-    return axios.post('https://api.igdb.com/v4/games', data, postConfig())
+    const body = formatBody(routeName)
+    return axios.post('https://api.igdb.com/v4/games', body, postConfig())
 }
 
 /**
@@ -62,29 +63,22 @@ const Post = async (routeName) => {
  * @param {String} dataType
  * @returns {String} raw text body string
  */
-function formatData(dataType) {
-    // unix time tables
-    // hour 3600
-    // day 86400
-    // week 604800
-    // month 2629743
-    // year 31556926
-    const currentTime = Math.floor(new Date().getTime() * 0.001)
-    const startingTime = currentTime - 604800 //current time - a week in unix
-
+function formatBody(dataType) {
     switch (dataType) {
         case 'new':
-            return `fields platforms.*, release_dates.date, release_dates.human, name;
-            where release_dates.date >= ${startingTime} & release_dates.date <= ${currentTime};`
+            return `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                where ${WHERE.released_last_7_days()} & ${WHERE.remove_exotic};`
         case 'upcoming':
-            return `fields platforms.*, release_dates.date, release_dates.human, name;
-            where release_dates.date > ${currentTime};`
+            return `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                where ${WHERE.unreleased()} & ${WHERE.remove_exotic};`
         case 'popular':
-            return `fields platforms.*, release_dates.date, release_dates.human, name, total_rating_count;
-            where release_dates.date >= ${startingTime} & release_dates.date <= ${currentTime} & total_rating_count > 20;`
+            return `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                where ${WHERE.released_last_30_days()} & ${
+                WHERE.more_than_20_ratings
+            } & ${WHERE.remove_exotic};`
         default:
             return
     }
 }
 
-module.exports = { getAccessToken, Post, formatData }
+module.exports = { getAccessToken, Post, formatBody }
