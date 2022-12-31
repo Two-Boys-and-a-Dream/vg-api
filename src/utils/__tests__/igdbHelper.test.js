@@ -1,8 +1,6 @@
 const IGDBHelper = require('../igdbHelper')
 const axios = require('axios')
 
-jest.mock('axios')
-
 const in1Min = new Date().getTime() + 6000
 const response = { data: { access_token: '5', expires_in: 8600 } }
 const req = { route: { path: '/somewhere' } }

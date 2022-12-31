@@ -23,7 +23,11 @@ Clone the repo to your machine. Then run:
 npm i
 ```
 
-Reach out and request the `.env` file. To use your own credentials, follow the setup at [IGDB](https://api-docs.igdb.com/#about).
+Reach out and request the `.env` file.
+To use your own credentials, follow the setup for games/news:
+
+-   [IGDB](https://api-docs.igdb.com/#about).
+-   [RapidAPI](https://rapidapi.com/danielilieprojects-G7QdvK7X5Ao/api/videogames-news2).
 
 ## Running the project
 

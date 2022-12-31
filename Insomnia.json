@@ -1,23 +1,23 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2022-12-15T22:02:14.511Z",
-    "__export_source": "insomnia.desktop.app:v2022.6.0",
+    "__export_date": "2022-12-31T17:27:49.649Z",
+    "__export_source": "insomnia.desktop.app:v2022.7.0",
     "resources": [
         {
             "_id": "req_471ee84c03eb4fbb86171541fc7acb98",
-            "parentId": "fld_0a2b859d9959437b9206fd92690bddb8",
-            "modified": 1671139420045,
+            "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
+            "modified": 1672503013789,
             "created": 1670811632758,
             "url": "{{ _.url }}games/upcoming",
-            "name": "Upcoming Games",
+            "name": "upcoming",
             "description": "",
             "method": "GET",
             "body": {},
             "parameters": [],
             "headers": [],
             "authentication": {},
-            "metaSortKey": -1670811632758,
+            "metaSortKey": -1672502985935,
             "isPrivate": false,
             "settingStoreCookies": true,
             "settingSendCookies": true,
@@ -26,6 +26,18 @@
             "settingRebuildPath": true,
             "settingFollowRedirects": "global",
             "_type": "request"
+        },
+        {
+            "_id": "fld_7228b75c3bc542e5a249b3b83347c6bf",
+            "parentId": "fld_0a2b859d9959437b9206fd92690bddb8",
+            "modified": 1672502985885,
+            "created": 1672502985885,
+            "name": "games",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1672502985885,
+            "_type": "request_group"
         },
         {
             "_id": "fld_0a2b859d9959437b9206fd92690bddb8",
@@ -51,18 +63,18 @@
         },
         {
             "_id": "req_af6175b893b64d4c91037daf5449af4c",
-            "parentId": "fld_0a2b859d9959437b9206fd92690bddb8",
-            "modified": 1671139895828,
+            "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
+            "modified": 1672503009259,
             "created": 1670873418204,
             "url": "{{ _.url }}games/popular",
-            "name": "Popular Games",
+            "name": "popular",
             "description": "",
             "method": "GET",
             "body": {},
             "parameters": [],
             "headers": [],
             "authentication": {},
-            "metaSortKey": -1670808374814,
+            "metaSortKey": -1672502985885,
             "isPrivate": false,
             "settingStoreCookies": true,
             "settingSendCookies": true,
@@ -71,6 +83,76 @@
             "settingRebuildPath": true,
             "settingFollowRedirects": "global",
             "_type": "request"
+        },
+        {
+            "_id": "req_48bf844348dd4026b23469063b83f6b2",
+            "parentId": "fld_9268fbb2139a465badf4e342b258a2c3",
+            "modified": 1672332667404,
+            "created": 1670805116870,
+            "url": "{{ _.url }}games/new",
+            "name": "new_light",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1671572142142.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_9268fbb2139a465badf4e342b258a2c3",
+            "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
+            "modified": 1672503001147,
+            "created": 1672332651527,
+            "name": "new",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1672502985835,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_a15325cb572d49128469c0b78c7d6b44",
+            "parentId": "fld_5328bf9d61eb493d8ae99382d4f4ba45",
+            "modified": 1672502971901,
+            "created": 1672502958305,
+            "url": "{{ _.url }}news/recent",
+            "name": "recent",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1672417800327.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_5328bf9d61eb493d8ae99382d4f4ba45",
+            "parentId": "fld_0a2b859d9959437b9206fd92690bddb8",
+            "modified": 1672502949128,
+            "created": 1672502949128,
+            "name": "news",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1672502949128,
+            "_type": "request_group"
         },
         {
             "_id": "req_fee86974b28b4584816effd8e8b54cc0",
@@ -96,32 +178,9 @@
             "_type": "request"
         },
         {
-            "_id": "req_48bf844348dd4026b23469063b83f6b2",
-            "parentId": "fld_0a2b859d9959437b9206fd92690bddb8",
-            "modified": 1671139406148,
-            "created": 1670805116870,
-            "url": "{{ _.url }}games/new",
-            "name": "New Games",
-            "description": "",
-            "method": "GET",
-            "body": {},
-            "parameters": [],
-            "headers": [],
-            "authentication": {},
-            "metaSortKey": -1670805116870,
-            "isPrivate": false,
-            "settingStoreCookies": true,
-            "settingSendCookies": true,
-            "settingDisableRenderRequestBody": false,
-            "settingEncodeUrl": true,
-            "settingRebuildPath": true,
-            "settingFollowRedirects": "global",
-            "_type": "request"
-        },
-        {
             "_id": "req_ab143d1af5c74be8b5190d345bda581f",
             "parentId": "fld_c38c0a8b3df94dc6924badb6556acdcc",
-            "modified": 1671139329435,
+            "modified": 1672331907536,
             "created": 1670618923602,
             "url": "https://api.igdb.com/v4/games",
             "name": "NewReleasesSevenDaysOld",
@@ -140,7 +199,7 @@
                 },
                 {
                     "name": "Authorization",
-                    "value": "Bearer 3d070q2qxtqx2jdl2xav1bztehrodq",
+                    "value": "Bearer {% response 'body', 'req_584ce910ef874856953da4b5a3769ce7', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'when-expired', 5000 %}",
                     "id": "pair_75a7705e9ddc4794bc344eb29b3c5b76"
                 },
                 {
@@ -173,9 +232,51 @@
             "_type": "request_group"
         },
         {
+            "_id": "req_2819799d83294d2a8e73fcdfc84777b5",
+            "parentId": "fld_c38c0a8b3df94dc6924badb6556acdcc",
+            "modified": 1672332108366,
+            "created": 1672331618428,
+            "url": "https://api.igdb.com/v4/platform_logos",
+            "name": "platform_logos",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "text/plain",
+                "text": "fields url;\nwhere id = 203;"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Client-ID",
+                    "value": "{{ _.client_id }}",
+                    "id": "pair_853229b8f656445da991d33eb5763743"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer {% response 'body', 'req_584ce910ef874856953da4b5a3769ce7', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'when-expired', 5000 %}",
+                    "id": "pair_75a7705e9ddc4794bc344eb29b3c5b76"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "text/plain",
+                    "id": "pair_259d7732329140d59b04c112deb2e281"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1670711997040,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
             "_id": "req_99ce7513df9240eeb250b9ab5e8b6e62",
             "parentId": "fld_c38c0a8b3df94dc6924badb6556acdcc",
-            "modified": 1670895704785,
+            "modified": 1672331899784,
             "created": 1670622693242,
             "url": "https://api.igdb.com/v4/games",
             "name": "UpcomingGames",
@@ -196,7 +297,7 @@
                 {
                     "id": "pair_18f78c847cd946ccb2f8edda1fbe1980",
                     "name": "Authorization",
-                    "value": "Bearer d2uti26z7o26z2m96jvg1ifzf5bmyp",
+                    "value": "Bearer {% response 'body', 'req_584ce910ef874856953da4b5a3769ce7', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'when-expired', 5000 %}",
                     "description": ""
                 },
                 {
@@ -219,7 +320,7 @@
         {
             "_id": "req_cd10169922c24064ae4bfa5f1c693b37",
             "parentId": "fld_c38c0a8b3df94dc6924badb6556acdcc",
-            "modified": 1670873181553,
+            "modified": 1672412266945,
             "created": 1670720992165,
             "url": "https://api.igdb.com/v4/games",
             "name": "PopularGames",
@@ -240,7 +341,7 @@
                 {
                     "id": "pair_60369da7d23241a1aea2de9c672967dd",
                     "name": "Authorization",
-                    "value": "Bearer kh1ul4l0cykgns545tmqgde6wodnwj",
+                    "value": "Bearer {% response 'body', 'req_584ce910ef874856953da4b5a3769ce7', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'when-expired', 5000 %}",
                     "description": ""
                 },
                 {
@@ -286,7 +387,7 @@
         {
             "_id": "env_b775e209720af8dc77f7031427ac92a68a0fcfe7",
             "parentId": "wrk_b06c7804f7414b648eb4163207838b32",
-            "modified": 1671141534638,
+            "modified": 1672418959636,
             "created": 1670617941218,
             "name": "Base Environment",
             "data": {
@@ -303,14 +404,14 @@
         {
             "_id": "jar_b775e209720af8dc77f7031427ac92a68a0fcfe7",
             "parentId": "wrk_b06c7804f7414b648eb4163207838b32",
-            "modified": 1670873221517,
+            "modified": 1672412236505,
             "created": 1670617941220,
             "name": "Default Jar",
             "cookies": [
                 {
                     "key": "__cf_bm",
-                    "value": "7us5Ghi4wF9hhZGwHxuZmfHVHTGSBB6rFrxFOK1zlBI-1670873189-0-AY9Hs7OwR9UDrnymuhZRFwFPxkjwu1eYlg2xS7rPg9ATHjlqN68TKYBgkXykdVkOovDL8pmsFdNdGR+J7c9DRII=",
-                    "expires": "2022-12-12T19:56:29.000Z",
+                    "value": "FDhzzptKVk4qeXyUvAkibj.5qr2UCHBlEqoFEMB5gUU-1672412232-0-AX4mSSAGoPFXM2Q80PzU0AzryY8C80VNi3K4Hxdcz1OZRcsT047ZviAnlTsmSnvOhpnbdFxan5HedFbWJE6iYbE=",
+                    "expires": "2022-12-30T15:27:12.000Z",
                     "domain": "igdb.com",
                     "path": "/",
                     "secure": true,
@@ -318,8 +419,8 @@
                     "extensions": ["SameSite=None"],
                     "hostOnly": false,
                     "creation": "2022-12-09T20:52:00.251Z",
-                    "lastAccessed": "2022-12-12T19:27:01.517Z",
-                    "id": "7938574786883574"
+                    "lastAccessed": "2022-12-30T14:57:16.505Z",
+                    "id": "12192975398272066"
                 }
             ],
             "_type": "cookie_jar"
@@ -350,7 +451,7 @@
         {
             "_id": "env_eb96b8eafcc44c72bf9779cdc4df0075",
             "parentId": "env_b775e209720af8dc77f7031427ac92a68a0fcfe7",
-            "modified": 1671141703972,
+            "modified": 1672328824781,
             "created": 1671141479731,
             "name": "development",
             "data": { "url": "vg-api-development.up.railway.app/" },
