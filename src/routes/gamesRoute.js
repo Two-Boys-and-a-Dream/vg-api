@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const controller = require('../controllers/gamesController')
+const { routeHandler } = require('../utils/igdbHelper')
 
-router.get('/new', controller.newGames)
-router.get('/upcoming', controller.upcomingGames)
-router.get('/popular', controller.popularGames)
+router.get('/new', routeHandler)
+router.get('/upcoming', routeHandler)
+router.get('/popular', routeHandler)
 
 module.exports = router
