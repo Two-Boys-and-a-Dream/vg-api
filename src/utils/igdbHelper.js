@@ -47,11 +47,33 @@ const getAccessToken = async (token, expiration) => {
 }
 
 /**
+ * Reusable try/catch handler for IGDB routes.
+ * @param {Object} req Express request
+ * @param {Object} res Express res
+ */
+async function routeHandler(req, res) {
+    const { path } = req.route
+    try {
+        // removes first slash "/" from path
+        // ex. "/new" -> "new"
+        const sanitizedPath = path.substr(1)
+        const { data } = await Post(sanitizedPath)
+
+        res.status(200)
+        res.json(data)
+    } catch (error) {
+        console.error(error)
+        res.status(400)
+        res.send(error)
+    }
+}
+
+/**
  * Calls IGDB to retrieve data with pre-configured options.
  * @param {String} routeName name of IGDB endpoint you want to hit
  * @returns {Promise<Object>} raw axios response
  */
-const Post = async (routeName) => {
+async function Post(routeName) {
     await getAccessToken(accessToken, tokenExperationTime)
     // status 401 (NUMBER)
     const body = formatBody(routeName)
@@ -81,4 +103,4 @@ function formatBody(dataType) {
     }
 }
 
-module.exports = { getAccessToken, Post, formatBody }
+module.exports = { getAccessToken, routeHandler, Post, formatBody }
