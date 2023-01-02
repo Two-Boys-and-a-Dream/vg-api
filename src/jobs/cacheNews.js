@@ -1,4 +1,4 @@
-const NewsHelper = require('../utils/NewsHelper')
+const NewsHelper = require('../utils/newsHelper')
 
 async function cacheNews() {
     console.log('running [News Cache] task...')
