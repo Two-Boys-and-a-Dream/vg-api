@@ -92,6 +92,10 @@ class IGDBHelper {
         return body
     }
 
+    /**
+     * Entrypoint for class. Formats headers/body, then fetches and returns data from IGDB.
+     * @returns {Promise<AxiosResponse>}
+     */
     async fetchData() {
         await this.getAccessToken()
         const body = this.formatBody()
