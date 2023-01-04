@@ -27,7 +27,8 @@
         "axios": "0.27.2",
         "cors": "^2.8.5",
         "dotenv": "^16.0.3",
-        "express": "^4.18.2"
+        "express": "^4.18.2",
+        "node-cron": "^3.0.2"
     },
     "devDependencies": {
         "@types/jest": "^29.2.4",

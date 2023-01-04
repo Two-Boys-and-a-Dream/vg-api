@@ -17,4 +17,10 @@ function oneMonthAgoUnix() {
     return nowUnix() - 2629743
 }
 
-module.exports = { nowUnix, oneWeekAgoUnix, oneMonthAgoUnix }
+const CRONS = {
+    // "At minute 0 past every hour."
+    // https://crontab.guru/#0_*/1_*_*_*
+    hourly: '*/1 * * * *',
+}
+
+module.exports = { nowUnix, oneWeekAgoUnix, oneMonthAgoUnix, CRONS }
