@@ -1,20 +1,35 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2022-12-31T17:27:49.649Z",
+    "__export_date": "2023-01-02T20:37:15.406Z",
     "__export_source": "insomnia.desktop.app:v2022.7.0",
     "resources": [
         {
             "_id": "req_471ee84c03eb4fbb86171541fc7acb98",
             "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
-            "modified": 1672503013789,
+            "modified": 1672677138038,
             "created": 1670811632758,
             "url": "{{ _.url }}games/upcoming",
             "name": "upcoming",
             "description": "",
             "method": "GET",
             "body": {},
-            "parameters": [],
+            "parameters": [
+                {
+                    "id": "pair_df3f2415f6224c26a030378657f70bd5",
+                    "name": "limit",
+                    "value": "10",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "id": "pair_a0954935da1345ee915f00eb6005c6f6",
+                    "name": "offset",
+                    "value": "0",
+                    "description": "",
+                    "disabled": false
+                }
+            ],
             "headers": [],
             "authentication": {},
             "metaSortKey": -1672502985935,
@@ -64,14 +79,27 @@
         {
             "_id": "req_af6175b893b64d4c91037daf5449af4c",
             "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
-            "modified": 1672503009259,
+            "modified": 1672676899328,
             "created": 1670873418204,
             "url": "{{ _.url }}games/popular",
             "name": "popular",
             "description": "",
             "method": "GET",
             "body": {},
-            "parameters": [],
+            "parameters": [
+                {
+                    "id": "pair_67bb5289bb6a48d5a179c74d04e2778f",
+                    "name": "limit",
+                    "value": "10",
+                    "description": ""
+                },
+                {
+                    "id": "pair_ed9fe4905cc44ccea19946d3180135e7",
+                    "name": "offset",
+                    "value": "0",
+                    "description": ""
+                }
+            ],
             "headers": [],
             "authentication": {},
             "metaSortKey": -1672502985885,
@@ -86,18 +114,32 @@
         },
         {
             "_id": "req_48bf844348dd4026b23469063b83f6b2",
-            "parentId": "fld_9268fbb2139a465badf4e342b258a2c3",
-            "modified": 1672332667404,
+            "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
+            "modified": 1672676838778,
             "created": 1670805116870,
             "url": "{{ _.url }}games/new",
-            "name": "new_light",
+            "name": "new",
             "description": "",
             "method": "GET",
             "body": {},
-            "parameters": [],
+            "parameters": [
+                {
+                    "id": "pair_a6515315b53f4823928258440b569ce8",
+                    "name": "limit",
+                    "value": "10",
+                    "description": ""
+                },
+                {
+                    "id": "pair_c26b0c88ded54812aa5392bf55cb5629",
+                    "name": "offset",
+                    "value": "0",
+                    "description": "",
+                    "disabled": false
+                }
+            ],
             "headers": [],
             "authentication": {},
-            "metaSortKey": -1671572142142.5,
+            "metaSortKey": -1672502985860,
             "isPrivate": false,
             "settingStoreCookies": true,
             "settingSendCookies": true,
@@ -106,18 +148,6 @@
             "settingRebuildPath": true,
             "settingFollowRedirects": "global",
             "_type": "request"
-        },
-        {
-            "_id": "fld_9268fbb2139a465badf4e342b258a2c3",
-            "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
-            "modified": 1672503001147,
-            "created": 1672332651527,
-            "name": "new",
-            "description": "",
-            "environment": {},
-            "environmentPropertyOrder": null,
-            "metaSortKey": -1672502985835,
-            "_type": "request_group"
         },
         {
             "_id": "req_a15325cb572d49128469c0b78c7d6b44",
