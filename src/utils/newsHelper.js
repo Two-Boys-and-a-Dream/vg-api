@@ -3,7 +3,7 @@ const { News } = require('../models/News')
 const { NEWS_API_KEY, NEWS_API_HOST, NEWS_API_URL } = process.env
 
 class NewsHelper {
-    constructor() {
+    constructor(limit) {
         this.url = NEWS_API_URL
         this.config = {
             headers: {
@@ -11,6 +11,7 @@ class NewsHelper {
                 'X-RapidAPI-Host': NEWS_API_HOST,
             },
         }
+        this.limit = Number(limit) || 10
     }
 
     /**
@@ -28,15 +29,17 @@ class NewsHelper {
      * @returns {Promise<Array<Object>>} news data from DB
      */
     async fetchCached() {
-        const articles = await News.find()
+        const articles = await News.find().limit(this.limit).sort({ date: -1 })
 
         return articles
     }
 }
 
-async function routeHandler(_req, res) {
+async function routeHandler(req, res) {
+    const { query } = req
+
     try {
-        const news = new NewsHelper()
+        const news = new NewsHelper(query.limit)
 
         const results = await news.fetchCached()
         res.status(200)

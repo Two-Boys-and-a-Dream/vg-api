@@ -6,7 +6,11 @@ const { routeHandler } = require('../newsHelper')
 jest.mock('../../models/News')
 
 const axiosResponse = { data: [{ id: '1' }, { id: '2' }] }
-const req = {}
+const req = {
+    query: {
+        limit: 5,
+    },
+}
 const res = {
     status: jest.fn(),
     json: jest.fn(),
@@ -16,7 +20,7 @@ const res = {
 beforeEach(() => {
     jest.resetAllMocks()
     axios.get.mockResolvedValue(axiosResponse)
-    News.find.mockResolvedValue(axiosResponse.data)
+    News.find().limit().sort.mockResolvedValue(axiosResponse.data)
 })
 
 describe('newsHelper class', () => {

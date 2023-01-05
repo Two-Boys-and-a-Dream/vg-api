@@ -1,9 +1,9 @@
 require('dotenv').config()
 const express = require('express')
 const app = require('express')()
-const { gamesRouter, newsRouter } = require('./src/routes')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const { gamesRouter, newsRouter } = require('./src/routes')
 const { setupCronJobs } = require('./src/jobs')
 const { PORT, MONGO_URL } = process.env
 
@@ -29,7 +29,6 @@ async function main() {
         mongoose.set('strictQuery', true)
         await mongoose.connect(MONGO_URL)
         setupCronJobs()
-
         console.log('Successfully connected to DB')
         console.log(`Listening on port ${PORT}`)
     } catch (error) {

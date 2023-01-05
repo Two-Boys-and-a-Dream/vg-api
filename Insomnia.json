@@ -1,7 +1,7 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2023-01-05T16:48:16.425Z",
+    "__export_date": "2023-01-05T20:24:14.104Z",
     "__export_source": "insomnia.desktop.app:v2022.7.0",
     "resources": [
         {
@@ -182,14 +182,21 @@
         {
             "_id": "req_a15325cb572d49128469c0b78c7d6b44",
             "parentId": "fld_5328bf9d61eb493d8ae99382d4f4ba45",
-            "modified": 1672502971901,
+            "modified": 1672950034264,
             "created": 1672502958305,
             "url": "{{ _.url }}news/recent",
             "name": "recent",
             "description": "",
             "method": "GET",
             "body": {},
-            "parameters": [],
+            "parameters": [
+                {
+                    "id": "pair_7b388520622f4c278b6a0c78a2bd9624",
+                    "name": "limit",
+                    "value": "3",
+                    "description": ""
+                }
+            ],
             "headers": [],
             "authentication": {},
             "metaSortKey": -1672417800327.5,
