@@ -1,5 +1,5 @@
 const { default: axios } = require('axios')
-const { News } = require('../models/News')
+const News = require('../models/News.model')
 const { NEWS_API_KEY, NEWS_API_HOST, NEWS_API_URL } = process.env
 
 class NewsHelper {
@@ -29,7 +29,10 @@ class NewsHelper {
      * @returns {Promise<Array<Object>>} news data from DB
      */
     async fetchCached() {
-        const articles = await News.find().limit(this.limit).sort({ date: -1 })
+        const articles = await News.find(null, null, {
+            limit: this.limit,
+            sort: { date: -1 },
+        })
 
         return articles
     }

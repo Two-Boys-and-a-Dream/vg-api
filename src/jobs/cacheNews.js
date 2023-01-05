@@ -1,4 +1,4 @@
-const { News } = require('../models/News')
+const News = require('../models/News.model')
 const NewsHelper = require('../utils/newsHelper')
 
 async function cacheNews() {
@@ -8,13 +8,7 @@ async function cacheNews() {
         const news = new NewsHelper()
         const results = await news.fetchRecentFromAPI()
 
-        const promises = results.map(async (item) => {
-            const newsItem = new News(item)
-
-            await newsItem.save()
-        })
-
-        await Promise.all(promises)
+        await News.create(results)
         console.log(new Date().toISOString(), ' [News Cache] new items stored')
     } catch (error) {
         console.log('error in [News Cache] task...')
