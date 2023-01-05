@@ -1,3 +1,4 @@
+const News = require('../models/News.model')
 const NewsHelper = require('../utils/newsHelper')
 
 async function cacheNews() {
@@ -5,9 +6,10 @@ async function cacheNews() {
 
     try {
         const news = new NewsHelper()
-        const results = await news.fetchRecent()
+        const results = await news.fetchRecentFromAPI()
 
-        console.log(results)
+        await News.create(results)
+        console.log(new Date().toISOString(), ' [News Cache] new items stored')
     } catch (error) {
         console.log('error in [News Cache] task...')
         console.error(error)

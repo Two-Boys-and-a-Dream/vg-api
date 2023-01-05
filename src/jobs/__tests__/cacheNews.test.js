@@ -1,7 +1,9 @@
 const { cacheNews } = require('../cacheNews')
 const axios = require('axios')
 
-const errorSpy = jest.spyOn(console, 'error')
+const News = require('../../models/News.model')
+
+jest.mock('../../models/News.model')
 
 beforeEach(() => {
     jest.resetAllMocks()
@@ -16,12 +18,12 @@ describe('cacheNews', () => {
     it('handles success', async () => {
         await cacheNews()
 
-        expect(errorSpy).not.toHaveBeenCalled()
+        expect(News.create).toHaveBeenCalledTimes(1)
     })
-    it('handles errpr', async () => {
+    it('handles error', async () => {
         axios.get.mockRejectedValue({})
         await cacheNews()
 
-        expect(errorSpy).toHaveBeenCalledTimes(1)
+        expect(News.create).not.toHaveBeenCalled()
     })
 })

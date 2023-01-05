@@ -1,7 +1,7 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2023-01-02T20:37:15.406Z",
+    "__export_date": "2023-01-05T20:24:14.104Z",
     "__export_source": "insomnia.desktop.app:v2022.7.0",
     "resources": [
         {
@@ -150,16 +150,53 @@
             "_type": "request"
         },
         {
+            "_id": "req_f80f28d26e2f48b7a5947af9c9d415da",
+            "parentId": "fld_7228b75c3bc542e5a249b3b83347c6bf",
+            "modified": 1672926049259,
+            "created": 1672925993448,
+            "url": "{{ _.url }}games/single",
+            "name": "single:id",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [
+                {
+                    "id": "pair_24179e97143b474eb22587ea08d3ff26",
+                    "name": "id",
+                    "value": "5",
+                    "description": ""
+                }
+            ],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1672460393093.75,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
             "_id": "req_a15325cb572d49128469c0b78c7d6b44",
             "parentId": "fld_5328bf9d61eb493d8ae99382d4f4ba45",
-            "modified": 1672502971901,
+            "modified": 1672950034264,
             "created": 1672502958305,
             "url": "{{ _.url }}news/recent",
             "name": "recent",
             "description": "",
             "method": "GET",
             "body": {},
-            "parameters": [],
+            "parameters": [
+                {
+                    "id": "pair_7b388520622f4c278b6a0c78a2bd9624",
+                    "name": "limit",
+                    "value": "3",
+                    "description": ""
+                }
+            ],
             "headers": [],
             "authentication": {},
             "metaSortKey": -1672417800327.5,
@@ -210,7 +247,7 @@
         {
             "_id": "req_ab143d1af5c74be8b5190d345bda581f",
             "parentId": "fld_c38c0a8b3df94dc6924badb6556acdcc",
-            "modified": 1672331907536,
+            "modified": 1672863901342,
             "created": 1670618923602,
             "url": "https://api.igdb.com/v4/games",
             "name": "NewReleasesSevenDaysOld",
@@ -218,7 +255,7 @@
             "method": "POST",
             "body": {
                 "mimeType": "text/plain",
-                "text": "fields release_dates.platform.*, release_dates.human, name;\nwhere release_dates.date > 1670020433 & release_dates.date <= 1670620433;"
+                "text": "fields release_dates.platform.*, release_dates.human, name;\nwhere release_dates.date > 1670020433 & release_dates.date <= 1670620433;\nlimit 1;"
             },
             "parameters": [],
             "headers": [
@@ -260,6 +297,48 @@
             "environmentPropertyOrder": null,
             "metaSortKey": -1670805070528,
             "_type": "request_group"
+        },
+        {
+            "_id": "req_db6cd9ba617f4a83a08c7ab5bf50418b",
+            "parentId": "fld_c38c0a8b3df94dc6924badb6556acdcc",
+            "modified": 1672864390101,
+            "created": 1672863926130,
+            "url": "https://api.igdb.com/v4/games",
+            "name": "testingVideos",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "text/plain",
+                "text": "fields name, videos.name, videos.video_id;\nwhere id = (29667);"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Client-ID",
+                    "value": "{{ _.client_id }}",
+                    "id": "pair_853229b8f656445da991d33eb5763743"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer {% response 'body', 'req_584ce910ef874856953da4b5a3769ce7', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'when-expired', 5000 %}",
+                    "id": "pair_75a7705e9ddc4794bc344eb29b3c5b76"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "text/plain",
+                    "id": "pair_259d7732329140d59b04c112deb2e281"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1670711997052.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
         },
         {
             "_id": "req_2819799d83294d2a8e73fcdfc84777b5",
@@ -434,14 +513,14 @@
         {
             "_id": "jar_b775e209720af8dc77f7031427ac92a68a0fcfe7",
             "parentId": "wrk_b06c7804f7414b648eb4163207838b32",
-            "modified": 1672412236505,
+            "modified": 1672863886500,
             "created": 1670617941220,
             "name": "Default Jar",
             "cookies": [
                 {
                     "key": "__cf_bm",
-                    "value": "FDhzzptKVk4qeXyUvAkibj.5qr2UCHBlEqoFEMB5gUU-1672412232-0-AX4mSSAGoPFXM2Q80PzU0AzryY8C80VNi3K4Hxdcz1OZRcsT047ZviAnlTsmSnvOhpnbdFxan5HedFbWJE6iYbE=",
-                    "expires": "2022-12-30T15:27:12.000Z",
+                    "value": "Q_1YIjGMF6WdvUEtdjQYmOA6VRtVV76VI_zOhtLPhEI-1672863885-0-Aee9Y9rAlDmhS76fGEf5ON16nKG8v8ZdgYg4/L1lES8hEA91CV+6uHihepFXTzW7MeDZiR0ui5Qu9s23hEMPVhg=",
+                    "expires": "2023-01-04T20:54:45.000Z",
                     "domain": "igdb.com",
                     "path": "/",
                     "secure": true,
@@ -449,8 +528,8 @@
                     "extensions": ["SameSite=None"],
                     "hostOnly": false,
                     "creation": "2022-12-09T20:52:00.251Z",
-                    "lastAccessed": "2022-12-30T14:57:16.505Z",
-                    "id": "12192975398272066"
+                    "lastAccessed": "2023-01-04T20:24:46.499Z",
+                    "id": "09555832609927961"
                 }
             ],
             "_type": "cookie_jar"
