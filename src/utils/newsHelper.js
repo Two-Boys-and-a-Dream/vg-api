@@ -2,6 +2,11 @@ const { default: axios } = require('axios')
 const News = require('../models/News.model')
 const { NEWS_API_KEY, NEWS_API_HOST, NEWS_API_URL } = process.env
 
+/**
+ * Contains methods for returning news articles from
+ * News API, or our cached DB articles.
+ * @param {String} limit limit number of articles returned from DB call.
+ */
 class NewsHelper {
     constructor(limit) {
         this.url = NEWS_API_URL
@@ -25,7 +30,8 @@ class NewsHelper {
     }
 
     /**
-     * Returns 10 most recent cached articles from our DB
+     * Returns 10 most recent cached articles from our DB.
+     * Pass in limit when initiating class to change number returned.
      * @returns {Promise<Array<Object>>} news data from DB
      */
     async fetchCached() {
