@@ -74,14 +74,20 @@ describe('igdbHelper', () => {
         it('handles upcoming case', () => {
             IGDB = new IGDBHelper('upcoming', queryParams)
 
-            const data = IGDB.formatBody('upcoming')
+            const data = IGDB.formatBody()
             expect(typeof data).toEqual('string')
         })
 
         it('handles popular case', () => {
             IGDB = new IGDBHelper('popular', queryParams)
 
-            const data = IGDB.formatBody('popular')
+            const data = IGDB.formatBody()
+            expect(typeof data).toEqual('string')
+        })
+        it('handles single case', () => {
+            IGDB = new IGDBHelper('single', { ...queryParams, id: '12' })
+
+            const data = IGDB.formatBody()
             expect(typeof data).toEqual('string')
         })
     })

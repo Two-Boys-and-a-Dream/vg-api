@@ -16,6 +16,7 @@ class IGDBHelper {
         this.endpoint = endpoint
         this.limit = queryParams.limit || '10'
         this.offset = queryParams.offset || '0'
+        this.game_id = queryParams.id || '1'
     }
 
     /**
@@ -81,6 +82,13 @@ class IGDBHelper {
                 where ${WHERE.released_last_30_days()} & ${
                     WHERE.more_than_20_ratings
                 } & ${WHERE.remove_exotic};`
+                break
+            case 'single':
+                body = `fields ${FIELDS.game}, ${FIELDS.game_extended},
+                ${FIELDS.release_dates}, ${FIELDS.screenshots},
+                ${FIELDS.videos}, ${FIELDS.similar_games},
+                ${FIELDS.game_engines}, ${FIELDS.involved_companies};
+                where id = ${this.game_id} & ${WHERE.remove_exotic};`
                 break
             default:
                 break
