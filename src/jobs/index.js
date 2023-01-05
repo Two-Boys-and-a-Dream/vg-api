@@ -1,7 +1,7 @@
 const cron = require('node-cron')
 const { CRONS } = require('../utils/times')
 const { cacheNews } = require('./cacheNews')
-const { NODE_ENV } = process.env
+const { APP_ENV } = process.env
 
 /**
  * Sets up all jobs
@@ -9,7 +9,7 @@ const { NODE_ENV } = process.env
  */
 function setupCronJobs() {
     // Production only Cron jobs
-    if (NODE_ENV === 'production') {
+    if (APP_ENV === 'prod') {
         cron.schedule(CRONS.hourly, cacheNews)
     }
     // Add crons that are safe to run for dev & prod below

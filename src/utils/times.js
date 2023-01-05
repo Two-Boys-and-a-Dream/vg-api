@@ -20,7 +20,7 @@ function oneMonthAgoUnix() {
 const CRONS = {
     // "At minute 0 past every hour."
     // https://crontab.guru/#0_*/1_*_*_*
-    hourly: '*/1 * * * *',
+    hourly: '0 */1 * * *',
 }
 
 module.exports = { nowUnix, oneWeekAgoUnix, oneMonthAgoUnix, CRONS }
