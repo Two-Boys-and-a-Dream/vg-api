@@ -2,9 +2,9 @@ const { oneWeekAgoUnix, nowUnix, oneMonthAgoUnix } = require('./times')
 
 const FIELDS = {
     // Includes base information we plan to use for each and every game across the site.
-    game: 'name, slug, total_rating, total_rating_count, cover.image_id',
+    game: 'name, slug, total_rating, total_rating_count, cover.image_id, summary',
     // Full game information for a single game.
-    game_extended: 'follows, genres.name, genres.slug, summary, websites.url',
+    game_extended: 'follows, genres.name, genres.slug, storyline, websites.url',
     // Same information as "game", but nested.
     similar_games:
         'similar_games.name, similar_games.slug, similar_games.total_rating, similar_games.total_rating_count, similar_games.cover.image_id',
