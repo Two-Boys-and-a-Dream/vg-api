@@ -95,10 +95,37 @@ describe('igdbHelper', () => {
 
 describe('routeHandler', () => {
     it('handles success', async () => {
+        const expected = {
+            count: 1,
+            data: response.data,
+            limit: 15,
+            lastCursor: 10,
+            nextCursor: null,
+        }
+
         await routeHandler(req, res)
 
-        expect(res.json).toHaveBeenCalledWith(response.data)
+        expect(res.json).toHaveBeenCalledWith(expected)
     })
+
+    it('adds nextCursor information when data.length matches limit', async () => {
+        const thisReq = {
+            route: { path: '/somewhere' },
+            query: { limit: '1', offset: '50' },
+        }
+        const expected = {
+            count: 1,
+            data: response.data,
+            limit: 1,
+            lastCursor: 50,
+            nextCursor: 51,
+        }
+
+        await routeHandler(thisReq, res)
+
+        expect(res.json).toHaveBeenCalledWith(expected)
+    })
+
     it('handles error', async () => {
         axios.post.mockRejectedValue({})
         await routeHandler(req, res)

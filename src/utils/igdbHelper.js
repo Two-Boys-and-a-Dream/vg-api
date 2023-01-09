@@ -101,6 +101,37 @@ class IGDBHelper {
     }
 
     /**
+     * Formats game data results, and adds pagination information
+     * to send back as an API response.
+     * @param {Array<Object>} data game data
+     * @returns
+     */
+    formatResponse(data) {
+        // limit is just the sent in limit
+        const limit = Number(this.limit)
+
+        // results count
+        const count = data.length
+
+        // last cursor is the sent in offset. This was
+        // the starting point of our query
+        const lastCursor = Number(this.offset)
+
+        // next cursor should be the ending point of this current query,
+        // return undefined if we got fewer results from their API than {this.limit}
+        // that means there is no more data to fetch anyways.
+        const nextCursor = count === limit ? lastCursor + limit : null
+
+        return {
+            count,
+            limit,
+            lastCursor,
+            nextCursor,
+            data,
+        }
+    }
+
+    /**
      * Entrypoint for class. Formats headers/body, then fetches and returns data from IGDB.
      * @returns {Promise<AxiosResponse>}
      */
@@ -109,7 +140,13 @@ class IGDBHelper {
         const body = this.formatBody()
         const config = this.postConfig()
 
-        return axios.post('https://api.igdb.com/v4/games', body, config)
+        const results = await axios.post(
+            'https://api.igdb.com/v4/games',
+            body,
+            config
+        )
+
+        return this.formatResponse(results.data)
     }
 }
 
@@ -127,7 +164,7 @@ async function routeHandler(req, res) {
         // ex. "/new" -> "new"
         const sanitizedPath = path.substr(1)
         const IGDB = new IGDBHelper(sanitizedPath, query)
-        const { data } = await IGDB.fetchData()
+        const data = await IGDB.fetchData()
 
         res.json(data)
     } catch (error) {
