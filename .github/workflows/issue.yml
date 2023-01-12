@@ -1,0 +1,15 @@
+name: Add Issue to Project
+
+on:
+    issues:
+        types:
+            - opened
+
+jobs:
+    Add_Issue_To_Project:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/add-to-project@v0.4.0
+              with:
+                  project-url: https://github.com/orgs/Two-Boys-and-a-Dream/projects/2
+                  github-token: ${{ secrets.TBAAD_ORG_PAT }}
