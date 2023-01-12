@@ -132,7 +132,8 @@ class IGDBHelper {
     }
 
     /**
-     * Entrypoint for class. Formats headers/body, then fetches and returns data from IGDB.
+     * Entrypoint for class. Formats headers/body,
+     * then fetches and returns data from IGDB.
      * @returns {Promise<AxiosResponse>}
      */
     async fetchData() {
