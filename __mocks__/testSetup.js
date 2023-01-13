@@ -1,4 +1,15 @@
 jest.mock('axios')
+jest.mock('mongoose', () => {
+    const mocked = jest.createMockFromModule('mongoose')
+    return {
+        ...mocked,
+        model: jest.fn().mockImplementation(() => ({
+            createIndexes: jest.fn(),
+            create: jest.fn(),
+            find: jest.fn(),
+        })),
+    }
+})
 
 process.env.CLIENT_ID = 'testClientId'
 process.env.CLIENT_SECRET = 'testClientSecret'
