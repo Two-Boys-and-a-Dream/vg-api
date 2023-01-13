@@ -3,8 +3,6 @@ const axios = require('axios')
 const News = require('../../models/News.model')
 const { rawNews } = require('../../data/testData')
 
-jest.mock('../../models/News.model')
-
 beforeEach(() => {
     jest.resetAllMocks()
     axios.get.mockResolvedValue({ data: rawNews })
