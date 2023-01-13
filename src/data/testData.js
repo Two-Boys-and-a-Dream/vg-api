@@ -1,6 +1,5 @@
-const DBNews = [
+const rawNews = [
     {
-        _id: '507f191e810c19729de860ea',
         title: 'title',
         date: 'some date',
         description: 'some description',
@@ -8,7 +7,6 @@ const DBNews = [
         link: 'testLink',
     },
     {
-        _id: '3498n39g9qn59vq5vimq09fem',
         title: 'title2',
         date: 'some other date',
         description: 'a new description',
@@ -17,4 +15,15 @@ const DBNews = [
     },
 ]
 
-module.exports = { DBNews }
+const DBNews = [
+    {
+        _id: '507f191e810c19729de860ea',
+        ...rawNews[0],
+    },
+    {
+        _id: '3498n39g9qn59vq5vimq09fem',
+        ...rawNews[1],
+    },
+]
+
+module.exports = { rawNews, DBNews }
