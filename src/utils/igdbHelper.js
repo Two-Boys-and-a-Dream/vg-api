@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { FIELDS, WHERE } = require('./queries')
+const { FIELDS, WHERE, SORT } = require('./queries')
 const { CLIENT_ID, CLIENT_SECRET } = process.env
 
 /**
@@ -70,25 +70,37 @@ class IGDBHelper {
         // Build fields & where
         switch (this.endpoint) {
             case 'new':
-                body = `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                body = `
+                fields ${FIELDS.game}, ${FIELDS.release_dates};
+                sort ${SORT.first_release_date_newest_first};
                 where ${WHERE.released_last_7_days()} & ${WHERE.remove_exotic};`
+
                 break
             case 'upcoming':
-                body = `fields ${FIELDS.game}, ${FIELDS.release_dates};
+                body = `
+                fields ${FIELDS.game}, ${FIELDS.release_dates};
+                sort ${SORT.first_release_date_oldest_first};
                 where ${WHERE.unreleased()} & ${WHERE.remove_exotic};`
+
                 break
             case 'popular':
-                body = `fields ${FIELDS.game}, ${FIELDS.release_dates};
-                where ${WHERE.released_last_30_days()} & ${
-                    WHERE.more_than_20_ratings
-                } & ${WHERE.remove_exotic};`
+                body = `
+                fields ${FIELDS.game}, ${FIELDS.release_dates};
+                sort ${SORT.first_release_date_newest_first};
+                where ${WHERE.more_than_x_ratings(
+                    50
+                )} & ${WHERE.rated_x_or_higher(70)} & ${WHERE.remove_exotic};`
+
                 break
             case 'single':
-                body = `fields ${FIELDS.game}, ${FIELDS.game_extended},
+                body = `
+                fields ${FIELDS.game}, ${FIELDS.game_extended},
                 ${FIELDS.release_dates}, ${FIELDS.screenshots},
                 ${FIELDS.videos}, ${FIELDS.similar_games},
                 ${FIELDS.game_engines}, ${FIELDS.involved_companies};
+                sort ${SORT.release_date_oldest_first};
                 where id = ${this.game_id} & ${WHERE.remove_exotic};`
+
                 break
             default:
                 break
@@ -104,7 +116,7 @@ class IGDBHelper {
      * Formats game data results, and adds pagination information
      * to send back as an API response.
      * @param {Array<Object>} data game data
-     * @returns
+     * @returns {Object} response including data & pagination info
      */
     formatResponse(data) {
         // limit is just the sent in limit
