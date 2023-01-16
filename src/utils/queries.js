@@ -1,8 +1,8 @@
-const { oneWeekAgoUnix, nowUnix, oneMonthAgoUnix } = require('./times')
+const { UNIX } = require('./times')
 
 const FIELDS = {
     // Includes base information we plan to use for each and every game across the site.
-    game: 'name, slug, total_rating, total_rating_count, cover.image_id, summary',
+    game: 'name, slug, total_rating, total_rating_count, cover.image_id, summary, first_release_date',
     // Full game information for a single game.
     game_extended: 'follows, genres.name, genres.slug, storyline, websites.url',
     // Same information as "game", but nested.
@@ -24,16 +24,23 @@ const FIELDS = {
 
 const WHERE = {
     released_last_7_days: () => {
-        return `release_dates.date >= ${oneWeekAgoUnix()} & release_dates.date <= ${nowUnix()}`
-    },
-    released_last_30_days: () => {
-        return `release_dates.date >= ${oneMonthAgoUnix()} & release_dates.date <= ${nowUnix()}`
+        const unix = new UNIX()
+        return `release_dates.date >= ${unix.oneWeekAgo()} & release_dates.date <= ${unix.now()}`
     },
     unreleased: () => {
-        return `release_dates.date > ${nowUnix()}`
+        const unix = new UNIX()
+        return `release_dates.date > ${unix.now()}`
     },
-    more_than_20_ratings: 'total_rating_count > 20',
+    more_than_x_ratings: (x) => `total_rating_count > ${x}`,
+    rated_x_or_higher: (x) => `total_rating >= ${x}`,
     remove_exotic: 'themes != (42)',
 }
 
-module.exports = { FIELDS, WHERE }
+const SORT = {
+    first_release_date_oldest_first: 'first_release_date asc',
+    first_release_date_newest_first: 'first_release_date desc',
+    release_date_oldest_first: 'release_dates.date desc',
+    release_date_newest_first: 'release_dates.date asc',
+}
+
+module.exports = { FIELDS, WHERE, SORT }
