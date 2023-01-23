@@ -1,6 +1,6 @@
 const axios = require('axios')
 const { FIELDS, WHERE, SORT } = require('./queries')
-const tokenHelper = require('./tokenHelper')
+const TokenHelper = require('./tokenHelper')
 const { CLIENT_ID } = process.env
 
 /**
@@ -19,7 +19,7 @@ class IGDBHelper {
      * Retrieves & locally stores accessToken for IGDB API.
      */
     async setupAccessToken() {
-        const tokenClient = new tokenHelper('IGDB')
+        const tokenClient = new TokenHelper('IGDB')
         let token = await tokenClient.fetchStoredToken()
 
         // If no valid token, fetch a new one.

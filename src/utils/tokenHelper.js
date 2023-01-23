@@ -6,7 +6,7 @@ const { CLIENT_ID, CLIENT_SECRET } = process.env
  * Helper methods for managing access_tokens
  * @see {@link Tokens}
  */
-class tokenHelper {
+class TokenHelper {
     constructor(api) {
         this.api = api
     }
@@ -73,4 +73,4 @@ class tokenHelper {
     }
 }
 
-module.exports = tokenHelper
+module.exports = TokenHelper

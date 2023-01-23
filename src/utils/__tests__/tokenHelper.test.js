@@ -1,4 +1,4 @@
-const tokenHelper = require('../tokenHelper')
+const TokenHelper = require('../tokenHelper')
 const axios = require('axios')
 const Tokens = require('../../models/Tokens.model')
 
@@ -19,12 +19,12 @@ const storedExpiredToken = {
     expiration: 52,
 }
 
-let tokenClient = new tokenHelper(apiString)
+let tokenClient = new TokenHelper(apiString)
 
 beforeEach(() => {
     jest.resetAllMocks()
     axios.post.mockResolvedValue(goodToken)
-    tokenClient = new tokenHelper(apiString)
+    tokenClient = new TokenHelper(apiString)
     Tokens.findOne.mockResolvedValue(storedValidToken)
 })
 
