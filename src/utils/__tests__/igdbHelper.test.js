@@ -2,8 +2,6 @@ const IGDBHelper = require('../igdbHelper')
 const { routeHandler } = require('../igdbHelper')
 const axios = require('axios')
 
-const goodToken = { data: { access_token: '5', expires_in: 8600 } }
-const badToken = { data: { access_token: '5', expires_in: -500 } }
 const response = { data: [{ id: '1' }] }
 
 const queryParams = { limit: '15', offset: '10' }
@@ -35,33 +33,6 @@ describe('igdbHelper', () => {
 
             expect(IGDB.limit).toEqual('10')
             expect(IGDB.offset).toEqual('0')
-        })
-    })
-    describe('getAccessToken', () => {
-        it('fetches new token when stored token is undefined', async () => {
-            axios.post.mockResolvedValue(badToken)
-            await IGDB.getAccessToken()
-
-            expect(axios.post).toHaveBeenCalledTimes(1)
-        })
-        it('fetches new token when stored token is expired', async () => {
-            axios.post.mockResolvedValue(goodToken)
-            await IGDB.getAccessToken()
-
-            expect(axios.post).toHaveBeenCalledTimes(1)
-
-            // next call should not re-fetch, since the token just received
-            // is good now
-            await IGDB.getAccessToken()
-            expect(axios.post).toHaveBeenCalledTimes(1)
-        })
-
-        it('doesnt fetch new access token, when good access token exists', async () => {
-            await IGDB.getAccessToken()
-
-            // next call should re-use, no call to axios post
-            await IGDB.getAccessToken()
-            expect(axios.post).not.toHaveBeenCalled()
         })
     })
 

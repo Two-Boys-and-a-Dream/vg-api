@@ -7,6 +7,8 @@ jest.mock('mongoose', () => {
             createIndexes: jest.fn(),
             create: jest.fn(),
             find: jest.fn(),
+            findOne: jest.fn(),
+            findOneAndUpdate: jest.fn(),
         })),
     }
 })
