@@ -3,6 +3,9 @@ const { FIELDS, WHERE, SORT } = require('./queries')
 const tokenHelper = require('./tokenHelper')
 const { CLIENT_ID } = process.env
 
+/**
+ * Entry point for interacting with the IGDB API.
+ */
 class IGDBHelper {
     constructor(endpoint, queryParams) {
         this.accessToken = undefined
@@ -13,10 +16,7 @@ class IGDBHelper {
     }
 
     /**
-     * Validates the current access_token isn't expired.
-     * If so, retrieves and stores a new one.
-     * @param {String} token access_token
-     * @param {Number} expiration time that token expires
+     * Retrieves & locally stores accessToken for IGDB API.
      */
     async setupAccessToken() {
         const tokenClient = new tokenHelper('IGDB')
@@ -131,7 +131,7 @@ class IGDBHelper {
     /**
      * Entrypoint for class. Formats headers/body,
      * then fetches and returns data from IGDB.
-     * @returns {Promise<AxiosResponse>}
+     * @returns {Promise<Object>}
      */
     async fetchData() {
         await this.setupAccessToken()
