@@ -1,18 +1,11 @@
 const axios = require('axios')
 const { FIELDS, WHERE, SORT } = require('./queries')
-const { CLIENT_ID, CLIENT_SECRET } = process.env
-
-/**
- * Temporary token storage.
- * Need a more formal approach ASAP.
- */
-let accessToken
-let tokenExperationTime
+const tokenHelper = require('./tokenHelper')
+const { CLIENT_ID } = process.env
 
 class IGDBHelper {
     constructor(endpoint, queryParams) {
-        this.accessToken = accessToken
-        this.tokenExpiration = tokenExperationTime
+        this.accessToken = undefined
         this.endpoint = endpoint
         this.limit = queryParams.limit || '10'
         this.offset = queryParams.offset || '0'
@@ -25,24 +18,16 @@ class IGDBHelper {
      * @param {String} token access_token
      * @param {Number} expiration time that token expires
      */
-    async getAccessToken() {
-        // check if current token is expired
-        // if not, bail out early
-        const currentTime = new Date().getTime()
-        if (this.accessToken && currentTime < this.tokenExpiration) return
+    async setupAccessToken() {
+        const tokenClient = new tokenHelper('IGDB')
+        let token = await tokenClient.fetchStoredToken()
 
-        // retrieve new token
-        const url = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials`
-        const response = await axios.post(url)
-        const { access_token, expires_in } = response.data
+        // If no valid token, fetch a new one.
+        if (!token) {
+            token = await tokenClient.fetchNewIGDBToken()
+        }
 
-        // store it
-        accessToken = access_token
-        this.accessToken = access_token
-
-        const newExpiration = expires_in + currentTime
-        tokenExperationTime = newExpiration
-        this.tokenExpiration = newExpiration
+        this.accessToken = token
     }
 
     /**
@@ -149,7 +134,7 @@ class IGDBHelper {
      * @returns {Promise<AxiosResponse>}
      */
     async fetchData() {
-        await this.getAccessToken()
+        await this.setupAccessToken()
         const body = this.formatBody()
         const config = this.postConfig()
 
