@@ -5,7 +5,8 @@
     "main": "server.js",
     "scripts": {
         "test": "jest --coverage",
-        "start": "node server.js",
+        "start": "node .",
+        "dev": "nodemon .",
         "lint": "eslint .",
         "pretty": "prettier --write .",
         "prepare": "husky install"
